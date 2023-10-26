@@ -66,4 +66,4 @@ const UserSchema = new mongoose.Schema({
     },
 
 
-},{})
+},{collection:'users', timestamps: true}) //---> createdAt ve updatedAt timestamps sayesinde mongoose'ca yönetiliyor.
