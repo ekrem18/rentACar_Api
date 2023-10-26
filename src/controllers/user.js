@@ -45,6 +45,16 @@ module.exports = {
             data,
             new: await User.findOne({_id: req.params.id})
         })
+    },
+
+    delete: async (req, res) => {
+
+        const data = await User.deleteOne({ _id: req.params.id})
+
+        res.status(data.deletedCount ? 204 : 404). send({
+            error: !data.deletedCount,
+            data
+        })
 
     }
 }
