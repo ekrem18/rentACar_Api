@@ -76,7 +76,7 @@ const passwordEncrypt = required("../helpers/passwordEncrypt");
 UserSchema.pre("save", function (next) {
                                                         //---> Kaydetmeden hemen önceki değişklikleri burada düzenliyorum. pre-save kullandığımız zaman arrow func yazmıyoruz
 
-  const isEmailValidated = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email); // test from "data".
+  const isEmailValidated = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email); // test from "data"   True False döndürür.
 
   if (isEmailValidated) {
     const isPasswordValidated =/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&].{8,}$/.test(data.password);
@@ -85,7 +85,7 @@ UserSchema.pre("save", function (next) {
       
         this.password = passwordEncrypt(this.password);
       
-        next()
+        next()                                          //---> bu kısmı MW olarak yazıp alamıyoruz mongoose schema'ya özel bir durum. bu şekilde kullanılmalı
     } else {
         throw new Error ( ' Password Rulez Broken ')
     }
