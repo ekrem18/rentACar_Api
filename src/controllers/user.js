@@ -37,8 +37,14 @@ module.exports = {
     },
 
     update: async (req, res) => {
-                                                                            //->validations'ları update için de kullan
+                                                                            //--->  modeldelki validations'ları update için de kullan
         const data = await User.updateOne({ _id: req.params.id }, req.body, {runValidators: true})      //---> {hangi kayıt}, neyle güncellenecek, 
+
+        res.status(200).send({
+            error: false,
+            data,
+            new: await User.findOne({_id: req.params.id})
+        })
 
     }
 }
