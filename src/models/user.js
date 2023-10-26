@@ -93,3 +93,5 @@ UserSchema.pre("save", function (next) {
         throw new Error ( ' Password Rulez Broken ')
 }
 });
+/* ------------------------------------------------------- */
+module.exports = mongoose.model('User', UserSchema)
