@@ -1,6 +1,6 @@
-"use strict"
+"use strict";
 /* -------------------------------------------------------*/
-const { mongoose } = require('../configs/dbConnection')
+const { mongoose } = require("../configs/dbConnection");
 /* ------------------------------------------------------- *
 {
     "username": "admin",
@@ -22,48 +22,74 @@ const { mongoose } = require('../configs/dbConnection')
 }
 /* ------------------------------------------------------- */
 // User Model:
-const UserSchema = new mongoose.Schema({
-    username:{
-        type: String,
-        trim: true,
-        required: true,
-        unique: true
+const UserSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      trim: true,
+      required: true,
+      unique: true,
     },
 
-    password:{
-        type: String,
-        trim: true,
-        required: true,
+    password: {
+      type: String,
+      trim: true,
+      required: true,
     },
 
-    email:{
-        type: String,
-        trim: true,
-        required: true,
-        unique: true
+    email: {
+      type: String,
+      trim: true,
+      required: true,
+      unique: true,
     },
 
-    firstName:{
-        type: String,
-        trim: true,
-        required: true,
+    firstName: {
+      type: String,
+      trim: true,
+      required: true,
     },
 
-    lastName:{
-        type: String,
-        trim: true,
-        required: true,
+    lastName: {
+      type: String,
+      trim: true,
+      required: true,
     },
 
-    isActive:{
-        type: Boolean,
-        default: true,
+    isActive: {
+      type: Boolean,
+      default: true,
     },
 
-    isAdmin:{
-        type: Boolean,
-        default: false,
+    isAdmin: {
+      type: Boolean,
+      default: false,
     },
+  },
+  { collection: "users", timestamps: true }
+);                                                       //---> createdAt ve updatedAt timestamps sayesinde mongoose'ca yönetiliyor.
 
+/* ------------------------------------------------------- */
+// Schema Configs
+const passwordEncrypt = required("../helpers/passwordEncrypt");
 
-},{collection:'users', timestamps: true}) //---> createdAt ve updatedAt timestamps sayesinde mongoose'ca yönetiliyor.
+UserSchema.pre("save", function (next) {
+                                                        //---> Kaydetmeden hemen önceki değişklikleri burada düzenliyorum. pre-save kullandığımız zaman arrow func yazmıyoruz
+
+  const isEmailValidated = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email); // test from "data".
+
+  if (isEmailValidated) {
+    const isPasswordValidated =/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&].{8,}$/.test(data.password);
+    
+    if (isPasswordValidated) {
+      
+        this.password = passwordEncrypt(this.password);
+      
+        next()
+    } else {
+        throw new Error ( ' Password Rulez Broken ')
+    }
+  } else {
+        throw new Error ( ' Password Rulez Broken ')
+}
+});
