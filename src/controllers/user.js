@@ -51,10 +51,9 @@ module.exports = {
 
         const data = await User.deleteOne({ _id: req.params.id})
 
-        res.status(data.deletedCount ? 204 : 404). send({
-            error: !data.deletedCount,
+        res.status(data.deletedCount ? 204 : 404). send({                   //---> deletedCount data'nın içinde geliyor
+            error: !data.deletedCount,                                      //---> silme varsa false, yoksa true
             data
         })
-
     }
 }
