@@ -71,8 +71,9 @@ const UserSchema = new mongoose.Schema(
 
 /* ------------------------------------------------------- */
 // Schema Configs
-const passwordEncrypt = required("../helpers/passwordEncrypt");
+const passwordEncrypt = require("../helpers/passwordEncrypt");
 
+//---> (pre save kısmı sadece create için geçerli ama updateOne için de aşağıdaki fonksiyona giriyor) 
 UserSchema.pre(['save', 'updateOne'], function(next) {    //---> Kaydetmeden hemen önceki değişklikleri burada düzenliyorum. pre-save kullandığımız zaman arrow func yazmıyoruz
 
   const data = this?._update || this
@@ -90,8 +91,8 @@ UserSchema.pre(['save', 'updateOne'], function(next) {    //---> Kaydetmeden hem
           
           this.password = data.password = passwordEncrypt(data.password)
 
-          this._update = data // updateOne will wait data from "this._update".
-          next()                                        //---> bu kısmı MW olarak yazıp alamıyoruz mongoose schema'ya özel bir durum. bu şekilde kullanılmalı
+          this._update = data //---> updateOne will wait data from "this._update".
+          next()              //---> Bu aşamaya geldiysem kayıt tamamdr. Ve bu kısmı MW olarak yazıp alamıyoruz mongoose schema'ya özel bir durum. bu şekilde kullanılmalı
       } else {
           
           next( new Error('Password not validated.') )
