@@ -20,11 +20,19 @@ module.exports = {
                     if(user.isActive){
 
                         /* TOKEN TIME!! */
-                        let tokenData = await Token.findOne({userId : user._id})
+                        let tokenData = await Token.findOne({userId : user._id}) //---> daha önceden login olmuş mu? uyuşan token var mı bakıyorum. YOksa aşağı geçiyorum
+                        
                         if(!tokenData){
-                            let tokenKey = 
+                            let tokenKey = passwordEncrypt( user._id + Date.now() ) //--->anlık olarak zamanı id ile birleştirip encrypt edip eşsiz bir token oluşturduk
+                            tokenData = await Token.create({userId: user._id, token: tokenKey}) //--> girilen user._id yi ve tokenKey değerlere ata
 
                         }
+
+                        res.send({
+                            error: false, 
+                            token: tokenData.token,
+                            user,
+                        })
                     
 
                     }else{
