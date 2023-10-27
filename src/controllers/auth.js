@@ -14,7 +14,7 @@ module.exports = {
             
             if((username || email) && password) {
 
-                const user = User.findOne({ $or: [{username}, {email}] })  //---> USer tablosundan username'i veya email olan kayıtları getir user'a ata
+                const user =await User.findOne({ $or: [{username}, {email}] })  //---> USer tablosundan username'i veya email olan kayıtları getir user'a ata
 
                 if(user && user.password == passwordEncrypt(password)) { //---> kullanıcı var mı VE kullanıcının şifreli password'ü ile şu anda gelen şifreyi crypt edip kıyaslıyorum
                     if(user.isActive){
@@ -25,7 +25,6 @@ module.exports = {
                         if(!tokenData){
                             let tokenKey = passwordEncrypt( user._id + Date.now() ) //--->anlık olarak zamanı id ile birleştirip encrypt edip eşsiz bir token oluşturduk
                             tokenData = await Token.create({userId: user._id, token: tokenKey}) //--> girilen user._id yi ve tokenKey değerlere ata
-
                         }
 
                         res.send({
@@ -34,7 +33,6 @@ module.exports = {
                             user,
                         })
                     
-
                     }else{
                         res.errorStatusCode = 401
                         throw new Error('This account is not active...')
@@ -49,7 +47,6 @@ module.exports = {
                 
                 res.errorStatusCode = 401
                 throw new Error('Enter username/email and password pls..')
-            
             }
     },
 
