@@ -53,6 +53,17 @@ module.exports = {
     
 
     logout: async (req, res) => {
+      
+        const auth = req.headers?.authorization || null // Token ...tokenKey...
+        const tokenKey = auth ? auth.split(' ')[1] : null // ['Token', '...tokenKey...']
         
-    }
+        // Delete token from db:
+        const tokenData = await Token.deleteOne({ token: tokenKey })
+
+        res.send({
+            error: false,
+            message: 'Logout !?!?!?!',
+            data: tokenData
+        })
+    },
 }
