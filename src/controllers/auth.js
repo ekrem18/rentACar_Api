@@ -20,6 +20,12 @@ module.exports = {
                     if(user.isActive){
 
                         /* TOKEN TIME!! */
+                        let tokenData = await Token.findOne({userId : user._id})
+                        if(!tokenData){
+                            let tokenKey = 
+
+                        }
+                    
 
                     }else{
                         res.errorStatusCode = 401
