@@ -42,6 +42,10 @@ module.exports = {
 
     update: async (req, res) => {
                                                                         //--->  modeldelki validations'ları update için de kullan
+        //Filters:
+        let filters = {}
+        if (!req.user?.isAdmin) filters = {_id: req.user._id } 
+                                                                        
         const data = await User.updateOne({ _id: req.params.id }, req.body, {runValidators: true})      //---> {hangi kayıt}, neyle güncellenecek, 
 
         res.status(200).send({
