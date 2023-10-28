@@ -27,8 +27,12 @@ module.exports = {
     },
 
     read: async (req, res) => {
+        
+        //Filters:
+        let filters = {}
+        if (!req.user?.isAdmin) filters = {_id: req.user._id }          //---> user eğer Admin değilse; sadece kendi id'si ile ilgili işlem yapabilsin
       
-        const data = await User.findOne({ _id: req.params.id })                                         //---> id'si URL'den gelen id olan kişiyi oku/bul
+        const data = await User.findOne({ _id: req.params.id, ...filters })         //---> id'si URL'den gelen id olan kişiyi oku/bul, ve sadece kendi id'sini görebilsin
 
         res.status(200).send({
             error: false,
@@ -37,7 +41,7 @@ module.exports = {
     },
 
     update: async (req, res) => {
-                                                                            //--->  modeldelki validations'ları update için de kullan
+                                                                        //--->  modeldelki validations'ları update için de kullan
         const data = await User.updateOne({ _id: req.params.id }, req.body, {runValidators: true})      //---> {hangi kayıt}, neyle güncellenecek, 
 
         res.status(200).send({
