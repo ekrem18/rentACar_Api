@@ -44,7 +44,10 @@ module.exports = {
                                                                         //--->  modeldelki validations'ları update için de kullan
         //Filters:
         let filters = {}
-        if (!req.user?.isAdmin) filters = {_id: req.user._id } 
+        if (!req.user?.isAdmin) {
+            filters = {_id: req.user._id } 
+            req.body.isAdmin = false                                    //---> kullanıcının kendini admin yapmasının engelledim
+        }
                                                                         
         const data = await User.updateOne({ _id: req.params.id }, req.body, {runValidators: true})      //---> {hangi kayıt}, neyle güncellenecek, 
 
