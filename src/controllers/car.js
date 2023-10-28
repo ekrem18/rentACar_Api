@@ -9,13 +9,13 @@ module.exports = {
     list: async (req, res) => {
         //Filters:
         let filters ={}
-        if(!req.user?.isAdmin) filters = { isPublish : true}  //---> admin isPublish T/F hepsini görebiliyorken, admin omayan yalnızca isPublish: True görsün
+        if (!req.user?.isAdmin) filters = { isPublish: true }  //---> admin isPublish T/F hepsini görebiliyorken, admin omayan yalnızca yayında olanları True görsün
 
         const data = await res.getModelList(Car)
 
         res.status(200).send({
             error: false,
-            details: await res.getModelList(Car),
+            details: await res.getModelListDetails(Car),
             data
         })
     },
