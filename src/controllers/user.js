@@ -17,7 +17,9 @@ module.exports = {
     },
 
     create: async (req, res) => {
-        
+        // can not create admin:
+        req.body.isAdmin = false
+
         const data = await User.create(req.body)
 
         res.status(201).send({
