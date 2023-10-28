@@ -32,7 +32,7 @@ module.exports = {
         
         //Filters:
         let filters = {}
-        if (!req.user?.isAdmin) filters = {_id: req.user._id }          //---> user eğer Admin değilse; sadece kendi id'si ile ilgili işlem yapabilsin
+        if (!req.user?.isAdmin) filters = { _id: req.user._id }          //---> user eğer Admin değilse; sadece kendi id'si ile ilgili işlem yapabilsin
       
         const data = await User.findOne({ _id: req.params.id, ...filters })         //---> id'si URL'den gelen id olan kişiyi oku/bul, ve sadece kendi id'sini görebilsin
 
@@ -47,7 +47,7 @@ module.exports = {
         //Filters:
         let filters = {}
         if (!req.user?.isAdmin) {
-            filters = {_id: req.user._id } 
+            filters = { _id: req.user._id }
             req.body.isAdmin = false                                    //---> kullanıcının kendini admin yapmasının engelledim
         }
                                                                         
