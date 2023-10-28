@@ -5,8 +5,12 @@
 const Car = require('../models/car')
 
 module.exports = {
+
     list: async (req, res) => {
-        
+        //Filters:
+        let filters ={}
+        if(!req.user?.isAdmin) filters = { isPublish : true}  //---> admin isPublish T/F hepsini görebiliyorken, admin omayan yalnızca isPublish: True görsün
+
         const data = await res.getModelList(Car)
 
         res.status(200).send({
