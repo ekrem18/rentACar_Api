@@ -1,7 +1,5 @@
 "use strict"
-/* -------------------------------------------------------
-    NODEJS EXPRESS | CLARUSWAY FullStack Team
-------------------------------------------------------- */
+/* ------------------------------------------------------- */
 // Reservation Controller:
 
 const Reservation = require('../models/reservation')
@@ -27,10 +25,8 @@ module.exports = {
 
     create: async (req, res) => {
 
-        // get userId from loginedUser.
-        req.body.userId = req?.user._id;
+        req.body.userId = req?.user._id;   // yeni rez oluştururken id girmek zorunda kalmamak için oto. olarak id'yi yapıştır diyorum
 
-        // Check new reservations date in exists reservations:
         const userReservationInDates = await Reservation.findOne({
             userId: req.body.userId,
             $nor: [
