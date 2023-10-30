@@ -4,7 +4,7 @@
 const User = require('../models/user')
 const Token = require('../models/token')
 const passwordEncrypt = require('../helpers/passwordEncrypt')
-const { token } = require('morgan')
+const sendMail = require('../helpers/sendMail')
 
 module.exports = {
     list: async (req, res) => {
@@ -28,6 +28,19 @@ module.exports = {
         let tokenKey = passwordEncrypt(data._id + Date.now())
         let tokenData = await Token.create({ userId: data._id, token: tokenKey })
         /* TOKEN */
+
+        /* SENDMAIL to NewUSer */
+        sendMail(
+            // user email:
+            data.email,
+            // Subject:
+            'Welcome',
+            // Message:
+            `
+             <p>Welcome to SYSTEM BroooOOOooo</p>
+             Bla bla bla...
+            `
+        )
 
         res.status(201).send({
             error: false,

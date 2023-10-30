@@ -7,64 +7,74 @@ const nodemailer = require('nodemailer')
 
 module.exports = function (to, subject, message) {
 
-    // Create Test Account:
-    // nodemailer.createTestAccount().then((email) => console.log(email))
-    
-    // // Email Account Details:
-    // const emailSettings = {
-    //     user: 'rnspsyvy3w3kztdn@ethereal.email',
-    //     pass: 'hPU1v5CZqgf2DwD2jX',
-    //     smtp: { host: 'smtp.ethereal.email', port: 587, secure: false },
-    // }
-    // const transporter = nodemailer.createTransport({
-    //     host: emailSettings.smtp.host,
-    //     port: emailSettings.smtp.port,
-    //     secure: emailSettings.smtp.secure,
-    //     auth: {
-    //         user: emailSettings.user,
-    //         pass: emailSettings.pass,
-    //     }
-    // });
+    // Set Passive:
+    return true
 
-    //? GoogleMail Account Details:
+    // Create Test (Fake) Account:
+    // nodemailer.createTestAccount().then((email) => console.log(email))
+    /*
+    {
+      user: 'ac6evxdu3t45mgmt@ethereal.email',
+      pass: 'EhuWArCFt3uevRf887',
+      smtp: { host: 'smtp.ethereal.email', port: 587, secure: false },
+      imap: { host: 'imap.ethereal.email', port: 993, secure: true },
+      pop3: { host: 'pop3.ethereal.email', port: 995, secure: true },
+      web: 'https://ethereal.email'
+    }
+    */
+    // // Connection to mailServer:
+    // const transporter = nodemailer.createTransport({
+    //     host: 'smtp.ethereal.email',
+    //     port: 587,
+    //     secure: false, // false | 'tls' | 'ssl'
+    //     auth: {
+    //         user: 'ac6evxdu3t45mgmt@ethereal.email',
+    //         pass: 'EhuWArCFt3uevRf887'
+    //     }
+    // })
+    // // SendMail:
+    // transporter.sendMail({
+    //     from: 'ac6evxdu3t45mgmt@ethereal.email',
+    //     to: 'qadir@clarusway.com', // 'abc@mail.com, def@mail.com'
+    //     subject: 'Hello',
+    //     text: 'Hello There...',
+    //     html: '<b>Hello There</b>'
+    // }, (error, successInfo) => {
+    //     (error) ? console.log(error) : console.log(successInfo)
+    // })
+
+    //? GoogleMail (gmail):
     // Google -> AccountHome -> Security -> Two-Step-Verify -> App-Passwords
-    const emailSettings = {
-        service: 'gmail',
-        user: 'youremail@gmail.com',
-        pass: 'password' // https://myaccount.google.com/u/1/apppasswords
+    const mailSettings = {
+        service: 'Gmail',
+        user: 'avekremyilmazturk@gmail.com',
+        pass: 'sfrq pixt hnsi mgov' // https://myaccount.google.com/u/1/apppasswords
+    }
+    // //? YandexMail (yandex):
+    // const mailSettings = {
+    //     service: 'Yandex',
+    //     user: 'username@yandex.com',
+    //     pass: 'password' // your emailPassword
+    // }
+    // Mail Subject/Content:
+    const emailContent = {
+        from: mailSettings.user,
+        to: to, // 'qadiradamson@gmail.com',
+        subject: subject, // 'Hello',
+        text: message, // 'Hello, How are you?',
+        html: message, // '<b>Hello</b> How are you?'
     }
 
-    // //? YandexMail Account Details:
-    // const emailSettings = {
-    //     service: 'yandex',
-    //     user: 'username@yandex.com',
-    //     pass: 'password'
-    // }
-
-    // Connect to server with emailSettings:
+    // Connect to mailServer:
     const transporter = nodemailer.createTransport({
-        service: emailSettings.service,
+        service: mailSettings.service,
         auth: {
-            user: emailSettings.user,
-            pass: emailSettings.pass,
+            user: mailSettings.user,
+            pass: mailSettings.pass,
         }
-    });
-
-    // MessageDetails:
-    const emailContent = {
-        from: emailSettings.user,
-        to: to,
-        subject: subject,
-        text: message,
-        html: message
-    };
-
-    // sendMail:
+    })
+    // SendMail:
     transporter.sendMail(emailContent, (error, info) => {
-        if (error) {
-            console.log('ERROR', error);
-        } else {
-            console.log('SUCCESS', info)
-        }
-    });
+        error ? console.log(error) : console.log(info)
+    })
 }

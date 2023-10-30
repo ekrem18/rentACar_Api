@@ -42,7 +42,7 @@ app.use(require("./src/middlewares/findSearchSortPage"));
 /* ------------------------------------------------------- */
 /* ------------------------------------------------------- */
 //Mail Service & NodeMail:
-const nodemailer = require("nodemailer");
+// const nodemailer = require("nodemailer");
 
 //Create Fake Account
 // nodemailer.createTestAccount()
@@ -93,28 +93,28 @@ const nodemailer = require("nodemailer");
 /* ----- */
 
 //GoogleMail Model:
-const mailSettings = {
-    service: 'Gmail', 
-    user: 'avekremyilmazturk@gmail.com',
-    pass: 'glgo kjsk zxmn uqav'                                                 //---> google üzerinden aldığım şifre burda
-}
+// const mailSettings = {
+//     service: 'Gmail', 
+//     user: 'avekremyilmazturk@gmail.com',
+//     pass: 'glgo kjsk zxmn uqav'                                                 //---> google üzerinden aldığım şifre burda
+// }
 
 //İçerik tarafı
-const emailContent = {
-    from: mailSettings.user,
-    to: 'avekremyilmazturk@gmail.com',
-    subject: "Hello",
-    html: "<b> HelloOOOooo </b>",
-}
+// const emailContent = {
+//     from: mailSettings.user,
+//     to: 'avekremyilmazturk@gmail.com',
+//     subject: "Hello",
+//     html: "<b> HelloOOOooo </b>",
+// }
 
 //Bağlantı tarafı
-const transporter = nodemailer.createTransport({
-    service: mailSettings.service, 
-    auth: {                                                                     //---> Gmail bağlantı ayarları
-        user: mailSettings.user,
-        pass: mailSettings.pass,
-    },
-})
+// const transporter = nodemailer.createTransport({
+//     service: mailSettings.service, 
+//     auth: {                                                                     //---> Gmail bağlantı ayarları
+//         user: mailSettings.user,
+//         pass: mailSettings.pass,
+//     },
+// })
 
 //Gönderme tarafı
 //  transporter.sendMail(emailContent, (error, info) => {
