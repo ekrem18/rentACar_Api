@@ -1,8 +1,10 @@
 "use strict"
 /* -------------------------------------------------------*/
 // User Controller:
-
 const User = require('../models/user')
+const Token = require('../models/token')
+const passwordEncrypt = require('../helpers/passwordEncrypt')
+const { token } = require('morgan')
 
 module.exports = {
     list: async (req, res) => {
@@ -22,8 +24,14 @@ module.exports = {
 
         const data = await User.create(req.body)
 
+        /* TOKEN */
+        let tokenKey = passwordEncrypt(data._id + Date.now())
+        let tokenData = await Token.create({ userId: data._id, token: tokenKey })
+        /* TOKEN */
+
         res.status(201).send({
             error: false,
+            token: tokenData.token,
             data
         })
     },
