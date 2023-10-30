@@ -94,16 +94,27 @@ module.exports = {
     
     verify: async (req, res) => {
 
-        const {id: _id, verifyCode } = req.query
+        const { id: _id, verifyCode } = req.query
 
-        const user = User.findOne({_id})
+        const user = await User.findOne({ _id })
 
-        if(user &&verifyCode == passwordEncrypt(user.email)) {
+        if (user && verifyCode == passwordEncrypt(user.email)) {
 
-            await User.updateOne({ _id } , { emailVerified: true })
+            await User.updateOne({ _id }, { emailVerified: true })
+            sendMail(
+                user.email,
+                'Email Verified',
+            )
 
-        }else
+            res.status(200).send({
+                error: false,
+                message: 'Email Verified'
+            })
+
+        } else {
             res.errorStatusCode = 402
-            throw new Error('User not found')
+            throw new Error('User Not Found.')
+        }
+
     }
 }
