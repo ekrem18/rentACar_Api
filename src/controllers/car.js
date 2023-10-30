@@ -65,6 +65,10 @@ module.exports = {
     },
 
     update: async (req, res) => {
+
+        if(req?.user) {                         
+            req.body.updatedId = req.user._id   
+        }
                                                                             
         const data = await Car.updateOne({ _id: req.params.id }, req.body, {runValidators: true})    
 
