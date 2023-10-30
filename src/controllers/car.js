@@ -16,10 +16,10 @@ module.exports = {
         if(getStartDate && getEndDate ) {
             const reservedCars = await Reservation.find({
                 $or:[
-                    { startDate : { $gt : getEndDate } },  //---> iki tane şartım var. başlangıç tarihim user'ın bitiş tarihinden büyük olanlar 
-                    { endDate : { $lt: getStartDate } }    //---> bitiş tarihi de müşteriden gelecek başlangıç tarihten küçük olanlar
-                ]                                          //---> yani; 2tarih arasına denk gelecek bir arama filtresini engellemeye çalışıyorum 
-            })
+                    { startDate : { $gt : getEndDate } },  //---> 1- iki tane şartım var.kayıtlı rez. tarihinin başlangıç tarihi user'ın bitiş tarihinden büyük olanlar 
+                    { endDate : { $lt: getStartDate } }    //---> 2- kayıtlı rez. tarihinin bitiş tarihi de müşteriden gelecek başlangıç tarihten küçük olanlar
+                ]                                          //---> 3- yani; 2tarih arasına denk gelecek bir arama filtresini engellemeye çalışıyorum 
+            })                                             //---> 4- Bu şartlar sağlandığında aracı filtrelemede gösterebilirim
 
 
         }
