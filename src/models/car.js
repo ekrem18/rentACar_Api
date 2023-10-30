@@ -87,4 +87,4 @@ const CarSchema = new mongoose.Schema({
 }, { collection: 'cars', timestamps: true })
 
 /* ------------------------------------------------------- */
-module.exports = mongoose.model('Car', CarSchema )
+module.exports = mongoose.model('Car', CarSchema)

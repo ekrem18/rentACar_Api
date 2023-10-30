@@ -44,7 +44,7 @@ module.exports = {
 
     update: async (req, res) => {
         // #swagger.ignore = true
-
+        
         const data = await Token.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
 
         res.status(200).send({

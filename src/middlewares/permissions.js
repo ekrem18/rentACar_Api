@@ -2,15 +2,19 @@
 /* -------------------------------------------------------*/
 // Middleware: permissions
 
+
 module.exports = {
 
     isLogin: (req, res, next) => {
-
+        // any User:
         if (req.user && req.user.isActive) {
+
             next()
+
         } else {
+
             res.errorStatusCode = 403
-            throw new Error('NoPermission: You must LOGIN first !!!')
+            throw new Error('NoPermission: You must LOGIN first dude.')
         }
     },
 
@@ -23,7 +27,7 @@ module.exports = {
         } else {
 
             res.errorStatusCode = 403
-            throw new Error('NoPermission: You must login and to be Admin.')
+            throw new Error('NoPermission: You must login and be Admin.')
         }
     },
 }

@@ -51,7 +51,7 @@ module.exports = {
             req.body.isAdmin = false                                    //---> kullanıcının kendini admin yapmasının engelledim
         }
                                                                         
-        const data = await User.updateOne({ _id: req.params.id }, req.body, {runValidators: true})      //---> {hangi kayıt}, neyle güncellenecek, 
+        const data = await User.updateOne({ _id: req.params.id, ...filters }, req.body, { runValidators: true })      //---> {hangi kayıt}, neyle güncellenecek, 
 
         res.status(200).send({
             error: false,

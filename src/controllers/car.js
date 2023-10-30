@@ -9,28 +9,33 @@ module.exports = {
     list: async (req, res) => {
         //http://127.0.0.1:8000/cars?start=2023-10-08&end=2023-10-13   QUERY örneğim
         //Filters:
-        let filters ={}
+        let filters = {}
         if (!req.user?.isAdmin) filters = { isPublish: true }     //---> admin isPublish T/F hepsini görebiliyorken, admin omayan yalnızca yayında olanları True görsün
 
         const { start: getStartDate, end:getEndDate } = req.query //---> query'den gelen start'ı getStartDate, end'i de getEndDate  olarak tanımla diyorum
 
         if(getStartDate && getEndDate ) {
             const reservedCars = await Reservation.find({
-                $nor:[
-                    { startDate : { $gt : getEndDate } },  //---> 1- iki tane şartım var.kayıtlı rez. tarihinin başlangıç tarihi user'ın bitiş tarihinden büyük olanlar 
+                $nor:[                                     //---> *- or yerine nor diyerek şartı sağlamayanları getirdim
+                    { startDate : { $gt : getEndDate } },  //---> 1- iki tane şartım var. kayıtlı rez. tarihinin başlangıç tarihi user'ın bitiş tarihinden büyük olanlar 
                     { endDate : { $lt: getStartDate } }    //---> 2- kayıtlı rez. tarihinin bitiş tarihi de müşteriden gelecek başlangıç tarihten küçük olanlar
                 ]                                          //---> 3- yani; 2tarih arasına denk gelecek bir arama filtresini engellemeye çalışıyorum 
             }, {_id: 0, carId:1}).distinct('carId')        //---> 4- Bu şartlar sağlandığında aracı filtrelemede gösterebilirim
-                                                           //---> 5- or yerine nor diyerek şartı sağlamayanları getirdim
-         console.log(reservedCars);                        //---> distinct('carId') dememin sebebi benzer kayıtları teke düşürüp, Array içerisine aldım. 
+                                                           //---> 5- distinct('carId') diye belirtmemin sebebi benzerleri görüntüleme ve array içinde getir
+            
+            if(reservedCars.length) {                      //---> A)eğer reservedCars içi boş değilse;
+                filters._id = {$nin: reservedCars}         //---> B)reserve edilmeyenleri getir. diyorum
+         }  
+         
+        //  console.log(filters);                        
 
         }
 
-        const data = await res.getModelList(Car)
+        const data = await res.getModelList(Car, filters)
 
         res.status(200).send({
             error: false,
-            details: await res.getModelListDetails(Car),
+            details: await res.getModelListDetails(Car, filters ),
             data
         })
     },
