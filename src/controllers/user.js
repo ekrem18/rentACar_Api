@@ -39,6 +39,7 @@ module.exports = {
             `
              <p>Welcome to SYSTEM BroooOOOooo</p>
              Bla bla bla...
+             Verify Email: http://127.0.0.1:8000/users/verify/?id=${data._id}&verifyCode=${passwordEncrypt(data.email)}
             `
         )
 
@@ -89,5 +90,20 @@ module.exports = {
             error: !data.deletedCount,                                      //---> silme varsa false, yoksa true
             data
         })
+    },
+    
+    verify: async (req, res) => {
+
+        const {id: _id, verifyCode } = req.query
+
+        const user = User.findOne({_id})
+
+        if(user &&verifyCode == passwordEncrypt(user.email)) {
+
+            await User.updateOne({ _id } , { emailVerified: true })
+
+        }else
+            res.errorStatusCode = 402
+            throw new Error('User not found')
     }
 }

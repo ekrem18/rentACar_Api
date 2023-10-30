@@ -7,6 +7,7 @@ const permissions = require('../middlewares/permissions')
 const user = require('../controllers/user')
 
 // URL: /users
+router.get('/verify', user.verify)
 
 router.route('/')
     .get(user.list)
@@ -17,6 +18,8 @@ router.route('/:id')
     .put(permissions.isLogin, user.update)
     .patch(permissions.isLogin, user.update)
     .delete(permissions.isAdmin, user.delete)
+
+
 
 /* ------------------------------------------------------- */
 module.exports = router
