@@ -20,9 +20,9 @@ module.exports = {
                     { startDate : { $gt : getEndDate } },  //---> 1- iki tane şartım var.kayıtlı rez. tarihinin başlangıç tarihi user'ın bitiş tarihinden büyük olanlar 
                     { endDate : { $lt: getStartDate } }    //---> 2- kayıtlı rez. tarihinin bitiş tarihi de müşteriden gelecek başlangıç tarihten küçük olanlar
                 ]                                          //---> 3- yani; 2tarih arasına denk gelecek bir arama filtresini engellemeye çalışıyorum 
-            })                                             //---> 4- Bu şartlar sağlandığında aracı filtrelemede gösterebilirim
+            }, {_id: 0, carId:1}).distinct('carId')        //---> 4- Bu şartlar sağlandığında aracı filtrelemede gösterebilirim
                                                            //---> 5- or yerine nor diyerek şartı sağlamayanları getirdim
-         console.log(reservedCars);
+         console.log(reservedCars);                        //---> distinct('carId') dememin sebebi benzer kayıtları teke düşürüp, Array içerisine aldım. 
 
         }
 
