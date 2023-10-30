@@ -1,7 +1,7 @@
 "use strict"
 /* -------------------------------------------------------*/
 // Car Controller:
-
+const Reservation = require('../models/reservation')
 const Car = require('../models/car')
 
 module.exports = {
@@ -12,6 +12,17 @@ module.exports = {
         if (!req.user?.isAdmin) filters = { isPublish: true }     //---> admin isPublish T/F hepsini görebiliyorken, admin omayan yalnızca yayında olanları True görsün
 
         const { start: getStartDate, end:getEndDate } = req.query //---> query'den gelen start'ı getStartDate, end'i de getEndDate  olarak tanımla diyorum
+
+        if(getStartDate && getEndDate ) {
+            const reservedCars = await Reservation.find({
+                $or:[
+                    { startDate : { $gt : getEndDate } },  //---> iki tane şartım var. başlangıç tarihim user'ın bitiş tarihinden büyük olanlar 
+                    { endDate : { $lt: getStartDate } }    //---> bitiş tarihi de müşteriden gelecek başlangıç tarihten küçük olanlar
+                ]                                          //---> yani; 2tarih arasına denk gelecek bir arama filtresini engellemeye çalışıyorum 
+            })
+
+
+        }
 
         const data = await res.getModelList(Car)
 
