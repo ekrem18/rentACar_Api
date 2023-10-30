@@ -24,7 +24,7 @@ const upload = multer({             //---> multer'ı çağır diskStorage ayarı
 
 router.route('/')
     .get(car.list)
-    .post(permissions.isAdmin, car.create)
+    .post(permissions.isAdmin, upload.single('image'), car.create) //---> Mw olduğu için ortada yazdım ve single yerine array ya da any de kullanabilirim. 
 
 router.route('/:id')
     .get(car.read)

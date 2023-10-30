@@ -42,6 +42,9 @@ module.exports = {
 
     create: async (req, res) => {
         
+        console.log('file:', req.file)          //---> upload ederken single kullandıysam karşılarken file diyorum
+        console.log('files:', req.file)         //---> upload ederken array/ any kullandıysam karşılarken fileS diyorum
+
         if(req?.user) {                         //---> * örneğin araba create edeceğim zaman crete ve upd. id girmek istewmiyorum. kendi otomatik oluşutracak
             req.body.createdId = req.user._id   //---> eğer login olan bir kullanıcı varsa, kullanıcı id'sini body'de createdId olarak ayarla
             req.body.updatedId = req.user._id   //---> eğer login olan bir kullanıcı varsa, kullanıcı id'sini body'de updatedId olarak ayarla
