@@ -86,26 +86,33 @@ UserSchema.pre(['save', 'updateOne'], function(next) {    //---> Kaydetmeden hem
   // const emailRegExp = new RegExp("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$")
   // const isEmailValidated = emailRegExp.test(data.email)
   // const isEmailValidated = RegExp("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$").test(data.email)  //--->regex yapıldığında yazımı zorlaşıyor. iptal ediyorum
-  const isEmailValidated = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email) // test from "data".True False döndürür.
+  const isEmailValidated = data.email
+  ? /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email) 
+  : true                                                             // test from "data".True False döndürür.
 
   if (isEmailValidated) {
 
-      const isPasswordValidated = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&].{8,}$/.test(data.password)
-  
-      if (isPasswordValidated) {
-          
-          this.password = data.password = passwordEncrypt(data.password)
+    if (data?.password) {
 
-          this._update = data //---> updateOne will wait data from "this._update".
-          next()              //---> Bu aşamaya geldiysem kayıt tamamdr. Ve bu kısmı MW olarak yazıp alamıyoruz mongoose schema'ya özel bir durum. bu şekilde kullanılmalı
-      } else {
-          
-          next( new Error('Password not validated.') )
-      }
-  } else {
-      
-      next( new Error('Email not validated.') )
-  }
+        const isPasswordValidated = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&].{8,}$/.test(data.password)
+    
+        if (isPasswordValidated) {
+            
+            this.password = data.password = passwordEncrypt(data.password)
+            this._update = data // updateOne will wait data from "this._update".
+            
+        } else {
+            
+            next( new Error('Password not validated.') )
+        }
+    }
+
+    next() // Allow to save.
+
+} else {
+    
+    next( new Error('Email not validated.') )
+}
 })
 /* ------------------------------------------------------- */
 module.exports = mongoose.model('User', UserSchema)
