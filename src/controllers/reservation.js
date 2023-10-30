@@ -11,9 +11,8 @@ module.exports = {
     list: async (req, res) => {
 
         // Filters:
-        let filters = {}
-        // Only self records. except admin:
-        if (!req?.user.isAdmin) filters.userId = req.user._id
+        let filters = {}      //filters = { userId : req.user._id}
+        if (!req?.user.isAdmin) filters.userId = req.user._id   // Admin harici kullanıcılar, sadece kendi kayıtlarını görmke için filtreleme
 
         const data = await res.getModelList(Reservation, filters, ['userId', 'carId'])
 
