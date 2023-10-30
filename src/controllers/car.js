@@ -9,7 +9,9 @@ module.exports = {
     list: async (req, res) => {
         //Filters:
         let filters ={}
-        if (!req.user?.isAdmin) filters = { isPublish: true }  //---> admin isPublish T/F hepsini görebiliyorken, admin omayan yalnızca yayında olanları True görsün
+        if (!req.user?.isAdmin) filters = { isPublish: true }     //---> admin isPublish T/F hepsini görebiliyorken, admin omayan yalnızca yayında olanları True görsün
+
+        const { start: getStartDate, end:getEndDate } = req.query //---> query'den gelen start'ı getStartDate, end'i de getEndDate  olarak tanımla diyorum
 
         const data = await res.getModelList(Car)
 
