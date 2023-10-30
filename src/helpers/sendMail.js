@@ -59,7 +59,7 @@ module.exports = function (to, subject, message) {
     // Mail Subject/Content:
     const emailContent = {
         from: mailSettings.user,
-        to: to, // 'qadiradamson@gmail.com',
+        to: to, // 'avekremyilmazturk@gmail.com',
         subject: subject, // 'Hello',
         text: message, // 'Hello, How are you?',
         html: message, // '<b>Hello</b> How are you?'
