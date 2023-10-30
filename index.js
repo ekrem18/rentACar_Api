@@ -56,30 +56,59 @@ const nodemailer = require("nodemailer");
 }*/
 
 //Connection Mail Server
-const transporter = nodemailer.createTransport({
-  //mail servisine erişme komutu denilebilir
-  host: "smtp.ethereal.email",
-  port: "587",
-  secure: false, // ssl || tls
-  auth: {
-    user: "tfmcythdawkd3g6b@ethereal.email",
-    pass: "bAyqkDN61tG3pa1zTH",
-  },
-});
+// const transporter = nodemailer.createTransport({                         //mail servisine erişme komutu denilebilir
+
+//   host: "smtp.ethereal.email",
+//   port: "587",
+//   secure: false, // ssl || tls
+//   auth: {
+//     user: "tfmcythdawkd3g6b@ethereal.email",
+//     pass: "bAyqkDN61tG3pa1zTH",
+//   },
+// });
 
 //SendingMail
-transporter.sendMail(
-  {
-    from: "tfmcythdawkd3g6b@ethereal.email",
-    to: "avekremyilmazturk@gmail.com",
+// transporter.sendMail(
+//   {
+//     from: "tfmcythdawkd3g6b@ethereal.email",
+//     to: "avekremyilmazturk@gmail.com",
+//     subject: "Hello",
+//     text: "HelloOOOooo",
+//     html: "<b> HelloOOOooo </b>",
+//   },
+//   (error, successInfo) => {
+//     error ? console.log(error) : console.log(successInfo);
+//   }
+// );
+
+//GoogleMail Model:
+const mailSettings = {
+    service: 'Gmail', 
+    user: 'avekremyilmazturk@gmail.com',
+    pass: 'glgo kjsk zxmn uqav'                                                 //---> google üzerinden aldığım şifre burda
+}
+
+//İçerik tarafı
+const emailContent = {
+    from: mailSettings.user,
+    to: 'avekremyilmazturk@gmail.com',
     subject: "Hello",
-    text: "HelloOOOooo",
     html: "<b> HelloOOOooo </b>",
-  },
-  (error, successInfo) => {
-    error ? console.log(error) : console.log(successInfo);
-  }
-);
+}
+
+//Bağlantı tarafı
+const transporter = nodemailer.createTransport({
+    service: mailSettings.service, 
+    auth: {                                                                     //---> Gmail bağlantı ayarları
+        user: mailSettings.user,
+        pass: mailSettings.pass,
+    },
+})
+
+//Gönderme tarafı
+ transporter.sendMail(emailContent, (error, info) => {
+    error ? console.log(error) : console.log(info)
+})
 
 /* ------------------------------------------------------- */
 // Routes:
