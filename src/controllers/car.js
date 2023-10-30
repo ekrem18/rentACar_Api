@@ -7,6 +7,7 @@ const Car = require('../models/car')
 module.exports = {
 
     list: async (req, res) => {
+        //http://127.0.0.1:8000/cars?start=2023-10-08&end=2023-10-13   QUERY örneğim
         //Filters:
         let filters ={}
         if (!req.user?.isAdmin) filters = { isPublish: true }     //---> admin isPublish T/F hepsini görebiliyorken, admin omayan yalnızca yayında olanları True görsün
@@ -15,12 +16,13 @@ module.exports = {
 
         if(getStartDate && getEndDate ) {
             const reservedCars = await Reservation.find({
-                $or:[
+                $nor:[
                     { startDate : { $gt : getEndDate } },  //---> 1- iki tane şartım var.kayıtlı rez. tarihinin başlangıç tarihi user'ın bitiş tarihinden büyük olanlar 
                     { endDate : { $lt: getStartDate } }    //---> 2- kayıtlı rez. tarihinin bitiş tarihi de müşteriden gelecek başlangıç tarihten küçük olanlar
                 ]                                          //---> 3- yani; 2tarih arasına denk gelecek bir arama filtresini engellemeye çalışıyorum 
             })                                             //---> 4- Bu şartlar sağlandığında aracı filtrelemede gösterebilirim
-
+                                                           //---> 5- or yerine nor diyerek şartı sağlamayanları getirdim
+         console.log(reservedCars);
 
         }
 
