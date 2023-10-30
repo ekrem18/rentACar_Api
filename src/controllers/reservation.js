@@ -27,9 +27,9 @@ module.exports = {
 
         req.body.userId = req?.user._id;   // yeni rez oluştururken id girmek zorunda kalmamak için oto. olarak id'yi yapıştır diyorum
 
-        const userReservationInDates = await Reservation.findOne({
-            userId: req.body.userId,
-            $nor: [
+        const userReservationInDates = await Reservation.findOne({  //---> Rez. sırala peki hangilerini
+            userId: req.body.userId,                        //---> req body den gelen kullanıcıya ait
+            $nor: [                                         //---> çakışma yakalamak istiyorsam genel yapıo bu aslında
                 { startDate: { $gt: req.body.endDate } },
                 { endDate: { $lt: req.body.startDate } }
             ]
@@ -39,8 +39,8 @@ module.exports = {
 
             res.errorStatusCode = 400
             throw new Error(
-                'It cannot be added because there is another reservation with the same date.',
-                { cause: { userReservationInDates: userReservationInDates } }
+                "It's not possible to make a reservation for the same date.",
+                { cause: { userReservationInDates: userReservationInDates } }  //---> hata geldiğinde de mevcut olanı göstermek için cause ekliyorum
             )
         } else {
             
