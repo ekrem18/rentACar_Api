@@ -8,13 +8,16 @@ const permissions = require('../middlewares/permissions')
 const car = require('../controllers/car')
 
 /* -------------------------------------------------------*/
-//Upload Files -- Multer MW                             ---> Multer Mw'i nerede aktif ediyorsak çağırıyorsak orada upload etme aktif oluyor
+//Upload Files -- Multer MW                            //---> Multer Mw'i nerede aktif ediyorsak çağırıyorsak orada upload etme aktif oluyor
 //npm install multer
 
 const multer = require('multer')
-const upload = multer({             //---> multer'ı çağır diskStorage ayarıyla upload klasörünü ana dizinde oluştur diyorum      
+const upload = multer({                                 //---> multer'ı çağır diskStorage ayarıyla upload klasörünü ana dizinde oluştur diyorum      
     storage: multer.diskStorage({
-        destination: './upload'
+        destination: './upload',
+        filename: function(req, file, returnCallback){  //---> callback yazıyorum kiiiii,
+            returnCallback(null, 'ekmer.abc')           //---> upload ettiğimde kafasına göre isimlendirme yapmasın ve belirlediğim ismi girsin
+        }
     })
 })
 

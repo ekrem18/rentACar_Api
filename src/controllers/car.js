@@ -42,6 +42,7 @@ module.exports = {
 
     create: async (req, res) => {
         
+        console.log('body:', req.body)          
         console.log('file:', req.file)          //---> upload ederken single kullandıysam karşılarken file diyorum
         console.log('files:', req.file)         //---> upload ederken array/ any kullandıysam karşılarken fileS diyorum
 
