@@ -24,6 +24,7 @@ const { dbConnection } = require("./src/configs/dbConnection");
 dbConnection();
 
 /* ------------------------------------------------------- */
+/* ------------------------------------------------------- */
 // Middlewares:
 
 // Accept JSON:
@@ -38,6 +39,7 @@ app.use(require("./src/middlewares/logger"));
 // res.getModelList():
 app.use(require("./src/middlewares/findSearchSortPage"));
 
+/* ------------------------------------------------------- */
 /* ------------------------------------------------------- */
 //Mail Service & NodeMail:
 const nodemailer = require("nodemailer");
@@ -81,6 +83,15 @@ const nodemailer = require("nodemailer");
 //   }
 // );
 
+/* ----- */
+// YandexMail (yandex):
+// const mailSettings = {
+//     service: 'Yandex',
+//     user: 'username@yandex.com',
+//     pass: 'password' // your emailPassword
+// }
+/* ----- */
+
 //GoogleMail Model:
 const mailSettings = {
     service: 'Gmail', 
@@ -106,10 +117,12 @@ const transporter = nodemailer.createTransport({
 })
 
 //Gönderme tarafı
- transporter.sendMail(emailContent, (error, info) => {
-    error ? console.log(error) : console.log(info)
-})
+//  transporter.sendMail(emailContent, (error, info) => {
+//     error ? console.log(error) : console.log(info)
+// })
 
+
+/* ------------------------------------------------------- */
 /* ------------------------------------------------------- */
 // Routes:
 
@@ -131,6 +144,7 @@ app.all("/", (req, res) => {
 app.use(require("./src/routes"));
 
 /* ------------------------------------------------------- */
+/* ------------------------------------------------------- */
 
 // errorHandler:
 app.use(require("./src/middlewares/errorHandler"));
@@ -138,6 +152,8 @@ app.use(require("./src/middlewares/errorHandler"));
 // RUN SERVER:
 app.listen(PORT, HOST, () => console.log(`http://${HOST}:${PORT}`));
 
+
+/* ------------------------------------------------------- */
 /* ------------------------------------------------------- */
 // Syncronization (must be in commentLine):
 // require('./src/helpers/sync')()
