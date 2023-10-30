@@ -1,10 +1,10 @@
 "use strict";
 /* -------------------------------------------------------*/
-const { mongoose } = require("../configs/dbConnection");
+const { mongoose } = require('../configs/dbConnection')
 /* ------------------------------------------------------- *
 {
     "username": "admin",
-    "password": "1234",
+    "password": "aA*123456",
     "email": "admin@site.com",
     "firstName": "admin",
     "lastName": "admin",
@@ -13,7 +13,7 @@ const { mongoose } = require("../configs/dbConnection");
 }
 {
     "username": "test",
-    "password": "1234",
+    "password": "aA*123456",
     "email": "test@site.com",
     "firstName": "test",
     "lastName": "test",
