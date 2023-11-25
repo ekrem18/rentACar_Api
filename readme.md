@@ -1,52 +1,33 @@
-# RENT A CAR API
+# Rent_A_Car _Api
 
-### ERD:
+### Author:
+Linkedin: [@ekremyilmazturk](https://www.linkedin.com/in/ekrem-yilmazturk/)
+<br>
+<br>
 
-![ERD](./erdRentACarAPI.png)
+<h3>About My Project</h3>
+<p> 📌As you can see from the ER diagram, this API service project is built upon four different models. 📌Token used for security.  📌A permission system is established for editing/changing something about res./cars. 📌If you are a customer/user, you can select start and end date and see the list of available cars on selected dates. You can choose a car on the list and reserve that car, but can not reserve more than one car on a selected time period. You can not reserve cars which are reserved by other customers on selected time period. You can see the list of their reservations including past ones. You can list, create, read their reservations. 📌If you are an admin;  you can make CRUD operations on Car table, Customer (User) table and Reservation table📌Logging is implemented. 📌If you want to read the API documentation and check the structure, Swagger and Redoc documents are also available. To access them, you can follow the '/redoc' or '/swagger' routes.  </p>
+<br>
 
-// mkdir logs
-// npm i
+<h3>How to install</h3>
+If you want to clone the project to your local and test it, you must install first ,  
+📌"npm i express dotenv mongoose express-async-errors", 📌"npm i morgan", 📌"npm i multer", 📌"node i nodemailer"
+Finally, in the project directory, you can run:  `nodemon index.js`
+<br>
+<br>
 
---- 
+<h3>What is in this api project?</h3>
+<ul style="font-size: 18px;">
+  <li>Logging</li>
+  <li>Permissions</li>
+  <li>Authentications MW</li>
+  <li>Error Handler MW</li>
+  <li>Finding, Sorting and Pagination MW</li>
+  <li>Swagger & Redoc Docs</li>
+</ul>
+<br>
+<br>
 
-### Rent A Car Project 
-
-- Customers;
-  - can select start and end date and see the list of available cars on selected dates. It is not allowed to choose past dates.
-  - can choose a car on the list and reserve that car, but can not reserve more than one car on a selected time period,
-  - can not reserve cars which are reserved by other customers on selected time period.
-  - can see the list of their reservations including past ones.
-  - can list, create, read their reservations.
-  - can not update, delete reservations.
-
-- Admins;
-  - can make CRUD operations on Car table,
-  - can make CRUD operations on Customer (User) table,
-  - can make CRUD operations on Reservation table,
-
-- It can be createdId and updatedId in Car model.
-- There will be searching, sorting and pagination capabilities on list views.
-
-
----
-
-###  Araç Kiralama Projesi
-
-* Müşteriler:
-  * Tarih aralığı belirtip müsait araç listeleyebilir. Geçmiş tarihler listelenmez.
-  * Seçilen tarih aralığında araç rezerve edilebilir, ancak aynı tarih aralığında ikinci bir araç kiralayamaz.
-  * Rezerve edilmiş bir aracı, o tarihlerde rezerve edemez.
-  * Rezervasyonlarını listeyebilir, ekleyebilir, okuyabilir.
-  * Rezervasyonlarını güncelleyemez, silemez.
-* Yöneticiler:
-  * Araba tablosu CRUD işlemleri
-  * Müşteri (User) tablosu CRUD işlemleri
-  * Reservasyon tablosu CRUD işlemleri
-
-* Araba tablosunda createdId ve updatedId olabilir.
-* Listeleme ekranlarında arama, sıralama ve sayfalama imkanları olacaktır.
-
----
 
 ### Folder/File Structure:
 
